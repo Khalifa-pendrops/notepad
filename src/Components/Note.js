@@ -5,7 +5,7 @@ const Note = () => {
     const savedNotes = localStorage.getItem("notes");
     return savedNotes
       ? JSON.parse(savedNotes)
-      : [{ id: 1, content: "This is a sample note", image: null }];
+      : [{ id: 1, content: "This is a sample note. Delete if you want.", image: null }];
   });
 
   const [input, setInput] = useState("");
