@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const Note = () => {
   const [notes, setNotes] = useState([
-    { id: 1, content: "This is a sample note", image: null },
+    { id: 1, content: "Your notes should appear like this", image: null },
   ]);
 
   const [input, setInput] = useState("");
@@ -44,16 +44,18 @@ const Note = () => {
 
 
   return (
-    <>
+    <div className="container">
       <h1>React Notepad</h1>
       <div className="input-container">
         <textarea
-          placeholder="Write a new note..."
+          placeholder="Write your note here..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <input type="file" onChange={onImageChange} />
-        <button onClick={addNote}>Add Note</button>
+        <div className="add-file">
+          <input type="file" onChange={onImageChange} />
+          <button onClick={addNote}>Add Note</button>
+        </div>
       </div>
       <div className="notes-container">
         {notes.map((note) => (
@@ -63,7 +65,7 @@ const Note = () => {
               <img
                 src={note.image}
                 alt="note"
-                style={{ maxWidth: "100px", maxHeight: "100px" }}
+                style={{ maxWidth: "100px", maxHeight: "100px", borderRadius: "50%"}}
               />
             )}
             <button onClick={() => deleteNote(note.id)}>Delete</button>
@@ -76,7 +78,7 @@ const Note = () => {
         <button onClick={makeItalic}>Italic</button>
         <button onClick={makeUnderline}>Underline</button>
       </div>
-    </>
+    </div>
   );
 };
 
