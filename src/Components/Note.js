@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Note = () => {
-  const [notes, setNotes] = useState([
-    { id: 1, content: "Your notes should appear like this", image: null },
-  ]);
+  const [notes, setNotes] = useState(() => {
+    const savedNotes = localStorage.getItem("notes");
+    return savedNotes
+      ? JSON.parse(savedNotes)
+      : [{ id: 1, content: "This is a sample note", image: null }];
+  });
 
   const [input, setInput] = useState("");
   const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
 
   const addNote = () => {
     const newNote = { id: Date.now(), content: input, image: image };
@@ -28,24 +35,23 @@ const Note = () => {
       };
       reader.readAsDataURL(event.target.files[0]);
     }
-    };
-    
-      const makeBold = () => {
-        setInput(`<b>${input}</b>`);
-      };
+  };
 
-      const makeItalic = () => {
-        setInput(`<i>${input}</i>`);
-      };
+  const makeBold = () => {
+    setInput(`<b>${input}</b>`);
+  };
 
-      const makeUnderline = () => {
-        setInput(`<u>${input}</u>`);
-      };
+  const makeItalic = () => {
+    setInput(`<i>${input}</i>`);
+  };
 
+  const makeUnderline = () => {
+    setInput(`<u>${input}</u>`);
+  };
 
   return (
     <div className="container">
-      <h1>React Notepad</h1>
+      <h1>My Personal Notepad</h1>
       <div className="input-container">
         <textarea
           placeholder="Write your note here..."
@@ -60,12 +66,17 @@ const Note = () => {
       <div className="notes-container">
         {notes.map((note) => (
           <div key={note.id} className="note">
-            <p>{note.content}</p>
+            <p dangerouslySetInnerHTML={{ __html: note.content }}></p>
+
             {note.image && (
               <img
                 src={note.image}
                 alt="note"
-                style={{ maxWidth: "100px", maxHeight: "100px", borderRadius: "50%"}}
+                style={{
+                  maxWidth: "100px",
+                  maxHeight: "100px",
+                  borderRadius: "50%",
+                }}
               />
             )}
             <button onClick={() => deleteNote(note.id)}>Delete</button>
