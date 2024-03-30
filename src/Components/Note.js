@@ -28,7 +28,20 @@ const Note = () => {
       };
       reader.readAsDataURL(event.target.files[0]);
     }
-  };
+    };
+    
+      const makeBold = () => {
+        setInput(`<b>${input}</b>`);
+      };
+
+      const makeItalic = () => {
+        setInput(`<i>${input}</i>`);
+      };
+
+      const makeUnderline = () => {
+        setInput(`<u>${input}</u>`);
+      };
+
 
   return (
     <>
@@ -56,6 +69,12 @@ const Note = () => {
             <button onClick={() => deleteNote(note.id)}>Delete</button>
           </div>
         ))}
+      </div>
+
+      <div className="formatting-container">
+        <button onClick={makeBold}>Bold</button>
+        <button onClick={makeItalic}>Italic</button>
+        <button onClick={makeUnderline}>Underline</button>
       </div>
     </>
   );
